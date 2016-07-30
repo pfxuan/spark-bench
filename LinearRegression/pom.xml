@@ -31,7 +31,12 @@
 		<artifactId>spark-mllib_${scala.binary.version}</artifactId>
 		<version>${spark.version}</version>
 	</dependency>
-	
+    <dependency>
+      <groupId>com.ibm</groupId>
+      <artifactId>KMeansApp</artifactId>
+      <version>1.0</version>
+    </dependency>
+
   </dependencies> 
  
 </project>

@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package kmeans_min.src.main.scala
 
+import org.apache.hadoop.io.{ArrayWritable, DoubleWritable, NullWritable, Writable}
+import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.mllib.clustering.{KMeans, KMeansModel}
 import org.apache.spark.mllib.linalg.Vectors
@@ -42,8 +45,12 @@ object KmeansApp {
     // Load and parse the data
     // val parsedData = sc.textFile(input)
     var start = System.currentTimeMillis();
-    val data = sc.textFile(input)
-    val parsedData = data.map(s => Vectors.dense(s.split(' ').map(_.toDouble))).cache()
+    //val data = sc.textFile(input)
+    //val parsedData = data.map(s => Vectors.dense(s.split(' ').map(_.toDouble))).cache()
+    //val data = sc.sequenceFile[NullWritable, DoubleArrayWritable](input)
+    //val data = sc.sequenceFile[NullWritable, DoubleArrayWritable](input)
+    val data = sc.newAPIHadoopFile[NullWritable, DoubleArrayWritable, SequenceFileInputFormat[NullWritable, DoubleArrayWritable]](input)
+    val parsedData = data.map(s => Vectors.dense(s._2.asInstanceOf[DoubleArrayWritable].get().map(e => e.asInstanceOf[DoubleWritable].get()))).cache()
     val loadTime = (System.currentTimeMillis() - start).toDouble / 1000.0
 
     // Cluster the data into two classes using KMeans
@@ -74,4 +81,6 @@ object KmeansApp {
     if (args.length > 4) args(4).toInt
     else 1
   }
+
+  //private class DoubleArrayWritable extends ArrayWritable(classOf[DoubleWritable])
 }

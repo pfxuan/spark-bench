@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 
-package LinearRegression.src.main.java;
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Level;
+import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.function.Function;
 import org.apache.spark.mllib.util.LinearDataGenerator;
 import org.apache.spark.mllib.regression.LabeledPoint;
-import org.apache.spark.api.java.*;
-import org.apache.spark.api.java.function.Function;
 import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
 import org.apache.spark.rdd.RDD;
@@ -34,19 +34,25 @@ public class LinearRegressionDataGen {
         int numPar = (args.length > 5) ? Integer.parseInt(args[5]) : System.getProperty("spark.default.parallelism") != null ? Integer.parseInt(System.getProperty("spark.default.parallelism")) : 2;
         
         SparkConf conf = new SparkConf().setAppName("Liner Regression data generation");
-        //JavaSparkContext sc = new JavaSparkContext(conf);
         SparkContext sc = new SparkContext(conf);
-        //RDD<double[]> data = KMeansDataGenerator.generateKMeansRDD(sc, numPoint, numCluster, numDim, scaling, numPar);
         RDD<LabeledPoint> data=LinearDataGenerator.generateLinearRDD(sc,nExamples,
                 nFeatures,eps,numPar,intercepts);
-        JavaRDD<LabeledPoint> tmpdata=data.toJavaRDD();
-        JavaRDD<String> parsedData = tmpdata.map(
-               new Function<LabeledPoint, String>() {
-                    public String call(LabeledPoint s) {                        
-                        return s.toString();
-                    }
-                }
-        );
-        parsedData.saveAsTextFile(output);
+        data.toJavaRDD().map(new Function<LabeledPoint, Object>() {
+          @Override
+          public Object call(LabeledPoint v1) throws Exception {
+            return null;
+          }
+        });
+
+
+//        JavaRDD<LabeledPoint> tmpdata = data.toJavaRDD();
+//        JavaRDD<String> parsedData = tmpdata.map(
+//               new Function<LabeledPoint, String>() {
+//                    public String call(LabeledPoint s) {
+//                        return s.toString();
+//                    }
+//                }
+//        );
+//        parsedData.saveAsTextFile(output);
     }
 }
