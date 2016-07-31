@@ -17,11 +17,10 @@ public class DoubleArrayWritable extends ArrayWritable {
 
   public DoubleArrayWritable(Double[] array) {
     super(DoubleWritable.class);
-    this.set((Writable[]) Arrays.asList(array)
-        .stream()
-        .map(e -> new DoubleWritable(e))
-        .collect(Collectors.toList())
-        .toArray()
-    );
+    DoubleWritable[] ret = new DoubleWritable[array.length];
+    for (int i = 0; i < array.length; i++) {
+      ret[i] = new DoubleWritable(array[i]);
+    }
+    this.set(ret);
   }
 }
