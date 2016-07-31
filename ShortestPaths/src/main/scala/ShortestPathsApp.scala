@@ -1,4 +1,3 @@
-
 /*
  * (C) Copyright IBM Corp. 2015 
  *
@@ -22,7 +21,6 @@
  * and open the template in the editor.
  */
 
-package src.main.scala
 import org.apache.log4j.Logger
 import org.apache.log4j.Level
 import org.apache.spark.{SparkContext,SparkConf, Logging}

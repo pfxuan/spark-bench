@@ -14,7 +14,7 @@ RM ${INPUT_HDFS}
 
 
 JAR="${DIR}/../common/target/Common-1.0.jar"
-CLASS="DataGen.src.main.scala.GraphDataGen"
+CLASS="GraphDataGen"
 
 OPTION="${INOUT_SCHEME}${INPUT_HDFS} ${numV} ${NUM_OF_PARTITIONS} ${mu} ${sigma}"
 
