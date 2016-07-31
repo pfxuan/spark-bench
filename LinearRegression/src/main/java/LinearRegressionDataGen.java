@@ -41,16 +41,5 @@ public class LinearRegressionDataGen {
     data.toJavaRDD()
         .mapToPair(r -> new Tuple2<>(new DoubleWritable(r.label()), new DoubleArrayWritable(ArrayUtils.toObject(r.features().toArray()))))
         .saveAsNewAPIHadoopFile(output, DoubleWritable.class, DoubleArrayWritable.class, SequenceFileAsBinaryOutputFormat.class);
-
-
-//        JavaRDD<LabeledPoint> tmpdata = data.toJavaRDD();
-//        JavaRDD<String> parsedData = tmpdata.map(
-//               new Function<LabeledPoint, String>() {
-//                    public String call(LabeledPoint s) {
-//                        return s.toString();
-//                    }
-//                }
-//        );
-//        parsedData.saveAsTextFile(output);
   }
 }

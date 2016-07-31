@@ -45,7 +45,9 @@ object KmeansApp {
     // Load and parse the data
     var start = System.currentTimeMillis();
     val data = sc.newAPIHadoopFile[NullWritable, DoubleArrayWritable, SequenceFileInputFormat[NullWritable, DoubleArrayWritable]](input)
-    val parsedData = data.map(s => Vectors.dense(s._2.asInstanceOf[DoubleArrayWritable].get().map(e => e.asInstanceOf[DoubleWritable].get()))).cache()
+    val parsedData = data.map(s => Vectors.dense(s._2.asInstanceOf[DoubleArrayWritable].get().map(e => e.asInstanceOf[DoubleWritable].get())))
+    //val parsedData = data.map(s => Vectors.dense(s._2.asInstanceOf[DoubleArrayWritable].get().map(e => e.asInstanceOf[DoubleWritable].get()))).cache()
+    //val parsedData = data.map(s => Vectors.dense(s._2.asInstanceOf[DoubleArrayWritable].get().map(e => e.asInstanceOf[DoubleWritable].get()))).persist(StorageLevel.MEMORY_ONLY_SER)
     val loadTime = (System.currentTimeMillis() - start).toDouble / 1000.0
 
     // Cluster the data into two classes using KMeans
