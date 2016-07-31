@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package kmeans_min.src.main.scala
-
 import org.apache.hadoop.io.{ArrayWritable, DoubleWritable, NullWritable, Writable}
 import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat
 import org.apache.log4j.{Level, Logger}

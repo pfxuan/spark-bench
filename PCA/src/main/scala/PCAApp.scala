@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import org.apache.hadoop.io.{DoubleWritable, NullWritable}
+import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.mllib.feature.PCA
 import org.apache.spark.mllib.linalg.Vectors
@@ -39,7 +41,7 @@ object PCAApp {
     // Load and parse the data
     println("START load")
     var start = System.currentTimeMillis()
-    val data = sc.newAPIHadoopFile(input)
+    val data = sc.newAPIHadoopFile[DoubleWritable, DoubleArrayWritable, SequenceFileInputFormat[DoubleWritable, DoubleArrayWritable]](input)
     val loadTime = (System.currentTimeMillis() - start).toDouble / 1000.0
 
     // build model

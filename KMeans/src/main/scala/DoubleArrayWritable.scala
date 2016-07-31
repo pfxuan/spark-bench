@@ -1,5 +1,3 @@
-package kmeans_min.src.main.scala
-
 import org.apache.hadoop.io.{ArrayWritable, DoubleWritable}
 
 /**

@@ -11,7 +11,7 @@ RM ${INPUT_HDFS}
 
 
 JAR="${DIR}/target/KMeansApp-1.0.jar"
-CLASS="kmeans_min.src.main.scala.KmeansDataGen"
+CLASS="KmeansDataGen"
 OPTION="${INOUT_SCHEME}${INPUT_HDFS} ${NUM_OF_POINTS} ${NUM_OF_CLUSTERS} ${DIMENSIONS} ${SCALING} ${NUM_OF_PARTITIONS}"
 
 

@@ -2,9 +2,6 @@ import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.Writable;
 
-/**
- * Created by pxuan on 7/30/16.
- */
 public class DoubleArrayWritable extends ArrayWritable {
 
   public DoubleArrayWritable() {

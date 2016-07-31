@@ -14,16 +14,9 @@
  * limitations under the License.
  */
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import org.apache.hadoop.io.DoubleWritable
-import org.apache.hadoop.mapreduce.lib.output.SequenceFileAsBinaryOutputFormat
-import org.apache.log4j.Logger
-import org.apache.log4j.Level
+import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat
+import org.apache.log4j.{Level, Logger}
 import org.apache.spark.mllib.util.LinearDataGenerator
 import org.apache.spark.{SparkConf, SparkContext}
 
@@ -52,7 +45,7 @@ object PCADataGen {
       val va = new DoubleArrayWritable()
       va.set(v.features.toArray.map(new DoubleWritable(_)))
       (new DoubleWritable(v.label), va)
-    }.saveAsNewAPIHadoopFile(output, classOf[DoubleWritable], classOf[DoubleArrayWritable], classOf[SequenceFileAsBinaryOutputFormat])
+    }.saveAsNewAPIHadoopFile[SequenceFileOutputFormat[DoubleWritable, DoubleArrayWritable]](output)
     //}.saveAsSequenceFile(output, Some(classOf[DefaultCodec]))
 
     sc.stop();

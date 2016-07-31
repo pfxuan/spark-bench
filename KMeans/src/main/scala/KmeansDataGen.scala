@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package kmeans_min.src.main.scala
-
 import org.apache.hadoop.io._
-import org.apache.hadoop.mapreduce.lib.output.SequenceFileAsBinaryOutputFormat
+import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.mllib.util.KMeansDataGenerator
 import org.apache.spark.{SparkConf, SparkContext}
@@ -42,14 +40,12 @@ object KmeansDataGen {
     val numPar = if (args.length > 5) args(5).toInt else defPar
 
     val data = KMeansDataGenerator.generateKMeansRDD(sc, numPoint, numCluster, numDim, scaling, numPar)
-    //data.map(_.mkString(" ")).saveAsTextFile(output)
     data.map { v =>
       val va = new DoubleArrayWritable()
       va.set(v.map(new DoubleWritable(_)))
       (NullWritable.get, va)
+    }.saveAsNewAPIHadoopFile[SequenceFileOutputFormat[NullWritable, DoubleArrayWritable]](output)
     //}.saveAsSequenceFile(output, Some(classOf[DefaultCodec]))
-    //}.saveAsNewAPIHadoopFile[SequenceFileAsBinaryOutputFormat](output)
-    }.saveAsNewAPIHadoopFile(output, classOf[NullWritable], classOf[DoubleArrayWritable], classOf[SequenceFileAsBinaryOutputFormat])
 
     sc.stop();
   }
