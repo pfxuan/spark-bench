@@ -15,9 +15,9 @@ JAR="${DIR}/target/PCAApp-1.0.jar"
 CLASS="PCAApp"
 OPTION=" ${INOUT_SCHEME}${INPUT_HDFS} ${DIMENSIONS}"
 
-setup
+#setup
 for((i=0;i<${NUM_TRIALS};i++)); do
-    purge_data "${MC_LIST}"	
+#    purge_data "${MC_LIST}"
     START_TS=`get_start_ts`;
     START_TIME=`timestamp`
 
@@ -28,8 +28,6 @@ for((i=0;i<${NUM_TRIALS};i++)); do
     get_config_fields >> ${BENCH_REPORT}
     print_config  ${APP} ${START_TIME} ${END_TIME} ${SIZE} ${START_TS} ${res}>> ${BENCH_REPORT};
 done
-teardown
+#teardown
 
 exit 0
-
-

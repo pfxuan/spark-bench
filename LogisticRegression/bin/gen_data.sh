@@ -11,7 +11,7 @@ DIR=`cd $bin/../; pwd`
 
 echo "========== preparing LogisticRegression data =========="
 # paths check
-RM ${INPUT_HDFS}
+#RM ${INPUT_HDFS}
 
 # generate data
 JAR="${DIR}/target/LogisticRegressionApp-1.0.jar"
@@ -19,7 +19,7 @@ CLASS="LogisticRegressionDataGen"
 OPTION="${INOUT_SCHEME}${INPUT_HDFS} ${NUM_OF_EXAMPLES} ${NUM_OF_FEATURES} ${EPS} ${ProbOne} ${NUM_OF_PARTITIONS}"
 
 START_TS=`get_start_ts`;
-setup
+#setup
 START_TIME=`timestamp`
 echo_and_run sh -c " ${SPARK_HOME}/bin/spark-submit --class $CLASS --master ${APP_MASTER} ${YARN_OPT} ${SPARK_OPT} $JAR ${OPTION} 2>&1|tee ${BENCH_NUM}/LogisticRegression_gendata_${START_TS}.dat"
 res=$?
@@ -29,7 +29,7 @@ DU ${INPUT_HDFS} SIZE
 
 get_config_fields >> ${BENCH_REPORT}
 print_config  ${APP}-gendata ${START_TIME} ${END_TIME} ${SIZE} ${START_TS} ${res}>> ${BENCH_REPORT}
-teardown
+#teardown
 
 exit 0
 

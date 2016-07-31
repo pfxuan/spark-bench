@@ -7,7 +7,7 @@ DIR=`cd $bin/../; pwd`
 
 echo "========== preparing ${APP} data =========="
 
-RM ${INPUT_HDFS}
+#RM ${INPUT_HDFS}
 
 
 JAR="${DIR}/target/PCAApp-1.0.jar"
@@ -16,7 +16,7 @@ OPTION="${INOUT_SCHEME}${INPUT_HDFS} ${NUM_OF_SAMPLES} ${NUM_OF_FEATURES} ${NUM_
 
 
 START_TS=`get_start_ts`;
-setup
+#setup
 START_TIME=`timestamp`
 echo_and_run sh -c " ${SPARK_HOME}/bin/spark-submit --class $CLASS --master ${APP_MASTER} ${YARN_OPT} ${SPARK_OPT} $JAR ${OPTION} 2>&1|tee ${BENCH_NUM}/TEMP_gendata_${START_TS}.dat"
 res=$?;
@@ -26,7 +26,7 @@ DU ${INPUT_HDFS} SIZE
 
 get_config_fields >> ${BENCH_REPORT}
 print_config  ${APP}-gen ${START_TIME} ${END_TIME} ${SIZE} ${START_TS} ${res}>> ${BENCH_REPORT};
-teardown
+#teardown
 
 exit 0
 
