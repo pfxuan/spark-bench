@@ -8,7 +8,6 @@
  * @author minli
  */
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.mapreduce.lib.input.SequenceFileInputFormat;
@@ -47,7 +46,7 @@ public class LinearRegressionApp {
     long start = System.currentTimeMillis();
     //JavaRDD<String> data = sc.textFile(input);
     JavaPairRDD<DoubleWritable, DoubleArrayWritable> data = sc.newAPIHadoopFile(input, SequenceFileInputFormat.class, DoubleWritable.class, DoubleArrayWritable.class, new Configuration());
-    JavaRDD<LabeledPoint> parsedData = data.map(r -> new LabeledPoint(r._1.get(), Vectors.dense(ArrayUtils.toPrimitive((Double[]) r._2.toArray()))));
+    JavaRDD<LabeledPoint> parsedData = data.map(r -> new LabeledPoint(r._1.get(), Vectors.dense(r._2.toPrimitiveArray())));
     RDD<LabeledPoint> parsedRDD_Data = JavaRDD.toRDD(parsedData);
     //parsedRDD_Data.cache();
     double loadTime = (double) (System.currentTimeMillis() - start) / 1000.0;

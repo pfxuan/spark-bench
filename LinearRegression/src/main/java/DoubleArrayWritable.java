@@ -23,4 +23,13 @@ public class DoubleArrayWritable extends ArrayWritable {
     }
     this.set(ret);
   }
+
+  public double[] toPrimitiveArray() {
+    DoubleWritable[] records = (DoubleWritable[]) get();
+    double[] ret = new double[records.length];
+    for (int i = 0; i < records.length; i++) {
+      ret[i] = records[i].get();
+    }
+    return ret;
+  }
 }

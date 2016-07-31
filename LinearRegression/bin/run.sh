@@ -14,7 +14,7 @@ DU ${INPUT_HDFS} SIZE
 
 JAR="${DIR}/target/LinearRegressionApp-1.0.jar"
 CLASS="LinearRegressionApp"
-OPTION=" ${INOUT_SCHEME}${INPUT_HDFS} ${INOUT_SCHEME}${OUTPUT_HDFS} ${MAX_ITERATION} "
+OPTION=" ${INOUT_SCHEME}${INPUT_HDFS} ${MAX_ITERATION} "
 
 #setup
 for((i=0;i<${NUM_TRIALS};i++)); do
