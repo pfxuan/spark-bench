@@ -7,6 +7,7 @@
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileAsBinaryOutputFormat;
+import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
@@ -40,6 +41,6 @@ public class LinearRegressionDataGen {
         nFeatures, eps, numPar, intercepts);
     data.toJavaRDD()
         .mapToPair(r -> new Tuple2<>(new DoubleWritable(r.label()), new DoubleArrayWritable(ArrayUtils.toObject(r.features().toArray()))))
-        .saveAsNewAPIHadoopFile(output, DoubleWritable.class, DoubleArrayWritable.class, SequenceFileAsBinaryOutputFormat.class);
+        .saveAsNewAPIHadoopFile(output, DoubleWritable.class, DoubleArrayWritable.class, SequenceFileOutputFormat.class);
   }
 }
