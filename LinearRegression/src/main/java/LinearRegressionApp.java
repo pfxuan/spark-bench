@@ -44,7 +44,6 @@ public class LinearRegressionApp {
 
     // Load and parse data
     long start = System.currentTimeMillis();
-    //JavaRDD<String> data = sc.textFile(input);
     JavaPairRDD<DoubleWritable, DoubleArrayWritable> data = sc.newAPIHadoopFile(input, SequenceFileInputFormat.class, DoubleWritable.class, DoubleArrayWritable.class, new Configuration());
     JavaRDD<LabeledPoint> parsedData = data.map(r -> new LabeledPoint(r._1.get(), Vectors.dense(r._2.toPrimitiveArray())));
     RDD<LabeledPoint> parsedRDD_Data = JavaRDD.toRDD(parsedData);
@@ -67,7 +66,6 @@ public class LinearRegressionApp {
           }
         }
     );
-    //JavaRDD<Object>
     Double MSE = new JavaDoubleRDD(valuesAndPreds.map(
         new Function<Tuple2<Double, Double>, Object>() {
           public Object call(Tuple2<Double, Double> pair) {
@@ -78,7 +76,6 @@ public class LinearRegressionApp {
     double testTime = (double) (System.currentTimeMillis() - start) / 1000.0;
 
     System.out.printf("{\"loadTime\":%.3f,\"trainingTime\":%.3f,\"testTime\":%.3f}\n", loadTime, trainingTime, testTime);
-    //System.out.printf("{\"loadTime\":%.3f,\"trainingTime\":%.3f,\"testTime\":%.3f,\"saveTime\":%.3f}\n", loadTime, trainingTime, testTime, saveTime);
     System.out.println("training Mean Squared Error = " + MSE);
     System.out.println("training Weight = " +
         Arrays.toString(model.weights().toArray()));

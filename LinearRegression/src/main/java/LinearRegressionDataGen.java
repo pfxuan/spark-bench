@@ -1,12 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.hadoop.io.DoubleWritable;
-import org.apache.hadoop.mapreduce.lib.output.SequenceFileAsBinaryOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -42,5 +35,7 @@ public class LinearRegressionDataGen {
     data.toJavaRDD()
         .mapToPair(r -> new Tuple2<>(new DoubleWritable(r.label()), new DoubleArrayWritable(ArrayUtils.toObject(r.features().toArray()))))
         .saveAsNewAPIHadoopFile(output, DoubleWritable.class, DoubleArrayWritable.class, SequenceFileOutputFormat.class);
+
+    sc.stop();
   }
 }
