@@ -1,12 +1,27 @@
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.DoubleWritable;
+import org.apache.hadoop.io.Writable;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 /**
  * Created by pxuan on 7/30/16.
  */
 public class DoubleArrayWritable extends ArrayWritable {
 
-  public DoubleArrayWritable(Class<DoubleWritable> valueClass) {
-    super(valueClass);
+  public DoubleArrayWritable() {
+    super(DoubleWritable.class);
+  }
+
+  public DoubleArrayWritable(Double[] array) {
+    super(DoubleWritable.class);
+    this.set((Writable[]) Arrays.asList(array)
+        .stream()
+        .map(e -> new DoubleWritable(e))
+        .collect(Collectors.toList())
+        .toArray()
+    );
   }
 }

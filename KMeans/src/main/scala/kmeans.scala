@@ -43,12 +43,7 @@ object KmeansApp {
     val runs = calculateRuns(args)
 
     // Load and parse the data
-    // val parsedData = sc.textFile(input)
     var start = System.currentTimeMillis();
-    //val data = sc.textFile(input)
-    //val parsedData = data.map(s => Vectors.dense(s.split(' ').map(_.toDouble))).cache()
-    //val data = sc.sequenceFile[NullWritable, DoubleArrayWritable](input)
-    //val data = sc.sequenceFile[NullWritable, DoubleArrayWritable](input)
     val data = sc.newAPIHadoopFile[NullWritable, DoubleArrayWritable, SequenceFileInputFormat[NullWritable, DoubleArrayWritable]](input)
     val parsedData = data.map(s => Vectors.dense(s._2.asInstanceOf[DoubleArrayWritable].get().map(e => e.asInstanceOf[DoubleWritable].get()))).cache()
     val loadTime = (System.currentTimeMillis() - start).toDouble / 1000.0
