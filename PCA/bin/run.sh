@@ -12,7 +12,7 @@ echo "========== running ${APP} bench =========="
 DU ${INPUT_HDFS} SIZE 
 
 JAR="${DIR}/target/PCAApp-1.0.jar"
-CLASS="PCA.src.main.scala.PCAApp"
+CLASS="PCAApp"
 OPTION=" ${INOUT_SCHEME}${INPUT_HDFS} ${DIMENSIONS}"
 
 setup
