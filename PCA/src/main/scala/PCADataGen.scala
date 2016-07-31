@@ -52,7 +52,7 @@ object PCADataGen {
       val va = new DoubleArrayWritable()
       va.set(v.features.toArray.map(new DoubleWritable(_)))
       (new DoubleWritable(v.label), va)
-    }.saveAsNewAPIHadoopFile[SequenceFileAsBinaryOutputFormat](output)
+    }.saveAsNewAPIHadoopFile(output, classOf[DoubleWritable], classOf[DoubleArrayWritable], classOf[SequenceFileAsBinaryOutputFormat])
     //}.saveAsSequenceFile(output, Some(classOf[DefaultCodec]))
 
     sc.stop();
