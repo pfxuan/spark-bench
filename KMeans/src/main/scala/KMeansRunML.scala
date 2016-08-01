@@ -16,6 +16,7 @@
  */
 
 import org.apache.spark.ml.clustering.KMeans
+import org.apache.spark.ml.linalg.DenseVector
 import org.apache.spark.sql.SparkSession
 
 /**
@@ -47,8 +48,8 @@ object KMeansRunML {
     val dataset = spark.read.parquet(input)
 
     // Trains a k-means model.
-    val kmeans = new KMeans().setK(K).setMaxIter(maxIterations).setInitMode("KMeans.K_MEANS_PARALLEL").setSeed(127L)
-    val model = kmeans.fit(dataset)
+    val kmeans = new KMeans().setK(K).setMaxIter(maxIterations).setInitMode("k-means||").setSeed(127L)
+    val model = kmeans.fit(dataset.map(new DenseVector(_)))
 
     // Evaluate clustering by computing Within Set Sum of Squared Errors.
     val WSSSE = model.computeCost(dataset)

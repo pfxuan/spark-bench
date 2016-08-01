@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import org.apache.log4j.{Level, Logger}
+import org.apache.spark.ml.linalg.{DenseVector, Vectors}
 import org.apache.spark.mllib.util.KMeansDataGenerator
 import org.apache.spark.sql.SparkSession
 
@@ -30,6 +31,7 @@ object KmeansGenML {
       .builder
       .appName(s"${this.getClass.getSimpleName}")
       .getOrCreate()
+    import spark.implicits._
 
     val output = args(0)
     val numPoint = args(1).toInt
@@ -40,7 +42,8 @@ object KmeansGenML {
     val numPar = if (args.length > 5) args(5).toInt else defPar
 
     val data = KMeansDataGenerator.generateKMeansRDD(spark.sparkContext, numPoint, numCluster, numDim, scaling, numPar)
-    spark.createDataset(data).write.parquet(output)
+    data.map(new Tuple1(_)).toDF("features").write.parquet(output)
+    //data.map(Tuple1.apply).toDF("features").write.parquet(output)
     //spark.createDataFrame[Array[Double]](data).toDF().write.parquet(output)
 
     spark.stop();

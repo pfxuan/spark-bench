@@ -9,7 +9,6 @@
  * @author minli
  * unused
  */
-package SVM.src.main.java;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Level;
 import org.apache.spark.mllib.util.SVMDataGenerator;
@@ -22,7 +21,7 @@ import org.apache.spark.rdd.RDD;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Level;
 
-public class SVMDataGen {
+public class SVMDataGenJava {
             public static void main(String[] args) {
         if (args.length < 5) {
             System.out.println("usage: <output> <nExamples> <nFeatures> <eps> <intercept> [numPar]");
