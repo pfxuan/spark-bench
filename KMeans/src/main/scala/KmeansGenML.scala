@@ -13,13 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import org.apache.hadoop.io._
-import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.mllib.util.KMeansDataGenerator
-import org.apache.spark.{SparkConf, SparkContext}
+import org.apache.spark.sql.SparkSession
 
-object KmeansDataGen {
+object KmeansGenML {
   def main(args: Array[String]) {
     Logger.getLogger("org.apache.spark").setLevel(Level.WARN);
     Logger.getLogger("org.eclipse.jetty.server").setLevel(Level.OFF);
@@ -27,9 +25,11 @@ object KmeansDataGen {
       println("usage: <output> <numPoints> <numClusters> <dimenstion> <scaling factor> [numpar]")
       System.exit(0)
     }
-    val conf = new SparkConf
-    conf.setAppName("Spark KMeans DataGen")
-    val sc = new SparkContext(conf)
+    // Creates a SparkSession.
+    val spark = SparkSession
+      .builder
+      .appName(s"${this.getClass.getSimpleName}")
+      .getOrCreate()
 
     val output = args(0)
     val numPoint = args(1).toInt
@@ -39,14 +39,10 @@ object KmeansDataGen {
     val defPar = if (System.getProperty("spark.default.parallelism") == null) 2 else System.getProperty("spark.default.parallelism").toInt
     val numPar = if (args.length > 5) args(5).toInt else defPar
 
-    val data = KMeansDataGenerator.generateKMeansRDD(sc, numPoint, numCluster, numDim, scaling, numPar)
-    data.map { v =>
-      val va = new DoubleArrayWritable()
-      va.set(v.map(new DoubleWritable(_)))
-      (NullWritable.get, va)
-    }.saveAsNewAPIHadoopFile[SequenceFileOutputFormat[NullWritable, DoubleArrayWritable]](output)
-    //}.saveAsSequenceFile(output, Some(classOf[DefaultCodec]))
+    val data = KMeansDataGenerator.generateKMeansRDD(spark.sparkContext, numPoint, numCluster, numDim, scaling, numPar)
+    spark.createDataset(data).write.parquet(output)
+    //spark.createDataFrame[Array[Double]](data).toDF().write.parquet(output)
 
-    sc.stop();
+    spark.stop();
   }
 }
