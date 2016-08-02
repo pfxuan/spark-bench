@@ -23,7 +23,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.mllib.classification.{SVMModel, SVMWithSGD}
 import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics
 
-object SVMWithSGD {
+object SVMWithSGDApp {
 
   def main(args: Array[String]): Unit = {
     if (args.length < 3) {

@@ -11,22 +11,14 @@
 import org.apache.log4j.Logger;
 import org.apache.log4j.Level;
 
-import java.util.Arrays;
-import java.util.Random;
-
 import scala.Tuple2;
 
 import org.apache.spark.api.java.*;
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.mllib.classification.*;
 import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics;
-import org.apache.spark.mllib.linalg.Vector;
 import org.apache.spark.mllib.regression.LabeledPoint;
-import org.apache.spark.mllib.util.MLUtils;
 import org.apache.spark.SparkConf;
-import org.apache.spark.SparkContext;
-import org.apache.log4j.Logger;
-import org.apache.log4j.Level;
 import org.apache.spark.storage.StorageLevel;
 
 
