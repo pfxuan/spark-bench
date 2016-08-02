@@ -7,10 +7,9 @@ DIR=`cd $bin/../; pwd`
 . "${DIR}/bin/config.sh"
 echo "========== running MF benchmark =========="
 
-DU ${INPUT_HDFS} SIZE 
+#DU ${INPUT_HDFS} SIZE
 
-
-CLASS="MatrixFactorization.src.main.java.MFApp"
+CLASS="MFApp"
 OPTION=" ${INOUT_SCHEME}${INPUT_HDFS} ${INOUT_SCHEME}${OUTPUT_HDFS} ${rank} ${MAX_ITERATION} ${LAMBDA} ${STORAGE_LEVEL}"
 JAR="${DIR}/target/MFApp-1.0.jar"
 
@@ -18,11 +17,11 @@ JAR="${DIR}/target/MFApp-1.0.jar"
 #OPTION=" ${INOUT_SCHEME}${INPUT_HDFS} ${DATASET_DIR}/ml-10M100K/personalRatings.txt"
 #OPTION=" ${INOUT_SCHEME}${INPUT_HDFS} ${DATASET_DIR}/BigDataGeneratorSuite/Graph_datagen/personalRatings.txt $NUM_OF_PARTITIONS"
 
-setup
+#setup
 for((i=0;i<${NUM_TRIALS};i++)); do		
     # path check
-    RM ${OUTPUT_HDFS}
-    purge_data "${MC_LIST}"	
+#    RM ${OUTPUT_HDFS}
+#    purge_data "${MC_LIST}"
     START_TS=`get_start_ts`;
 
     START_TIME=`timestamp`
@@ -33,7 +32,7 @@ for((i=0;i<${NUM_TRIALS};i++)); do
     get_config_fields >> ${BENCH_REPORT}
     print_config  ${APP} ${START_TIME} ${END_TIME} ${SIZE} ${START_TS} ${res}>> ${BENCH_REPORT};
 done
-teardown
+#teardown
 exit 0
 
 
