@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import org.apache.hadoop.io.{ArrayPrimitiveWritable, DoubleWritable}
+import org.apache.hadoop.io.{ArrayPrimitiveWritable, DoubleWritable, NullWritable}
+import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat
 import org.apache.log4j.Logger
 import org.apache.log4j.Level
 
@@ -96,7 +97,9 @@ object MFDataGenerator {
       trainData.map(x => (x._1, x._2, x._3 + rand.nextGaussian * sigma))
     }
     //trainData.map(x => x._1 + "," + x._2 + "," + x._3).saveAsTextFile(outputPath)
-    trainData.map(v => (new DoubleWritable(v._3), new ArrayPrimitiveWritable(Array(v._1, v._2))))
+    trainData.map(v =>
+      (new DoubleWritable(v._3), new ArrayPrimitiveWritable(Array(v._1, v._2))))
+      .saveAsNewAPIHadoopFile[SequenceFileOutputFormat[DoubleWritable, ArrayPrimitiveWritable]](outputPath)
 
     sc.stop()
   }

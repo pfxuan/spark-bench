@@ -37,7 +37,7 @@ object MFApp {
     val sc = new SparkContext(conf)
 
     // Load and parse the data
-    val data = sc.newAPIHadoopFile[DoubleWritable, ArrayPrimitiveWritable[Int], SequenceFileInputFormat[DoubleWritable, ArrayPrimitiveWritable[Int]]](input)
+    val data = sc.newAPIHadoopFile[DoubleWritable, ArrayPrimitiveWritable, SequenceFileInputFormat[DoubleWritable, ArrayPrimitiveWritable]](input)
     val ratings = data.map(s => new Rating(s._2.get().asInstanceOf[Array[Int]](0), s._2.get().asInstanceOf[Array[Int]](1), s._1.get()))
     // ratings.cache()
 

@@ -49,11 +49,11 @@ object KMeansRunML {
 
     // Trains a k-means model.
     val kmeans = new KMeans().setK(K).setMaxIter(maxIterations).setInitMode("k-means||").setSeed(127L)
-    val model = kmeans.fit(dataset.map(new DenseVector(_)))
+    // val model = kmeans.fit(dataset.map(new DenseVector(_)))
 
     // Evaluate clustering by computing Within Set Sum of Squared Errors.
-    val WSSSE = model.computeCost(dataset)
-    println(s"Within Set Sum of Squared Errors = $WSSSE")
+    // val WSSSE = model.computeCost(dataset)
+    //println(s"Within Set Sum of Squared Errors = $WSSSE")
 
     // Shows the result.
     // println("Cluster Centers: ")
