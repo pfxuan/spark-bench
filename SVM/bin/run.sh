@@ -9,7 +9,7 @@ DIR=`cd $bin/../; pwd`
 echo "========== Running ${APP} Workload =========="
 
 #DU ${INPUT_HDFS} SIZE
-CLASS="SVMApp"
+CLASS="SVMWithSGD"
 OPTION=" ${INOUT_SCHEME}${INPUT_HDFS} ${INOUT_SCHEME}${OUTPUT_HDFS} ${MAX_ITERATION} ${STORAGE_LEVEL}"
 JAR="${DIR}/target/SVMApp-1.0.jar"
 
